@@ -4,7 +4,7 @@
 
 var $ = require('jquery'),
     _ = require('underscore'),
-    Backbone = require('Backbone');
+    Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
   defaults : {

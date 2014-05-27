@@ -4,11 +4,13 @@
 
 var $ = require('jquery'),
     _ = require('underscore'),
-    Backbone = require('Backbone');
+    Backbone = require('backbone');
+
+var templates = require('../../builds/templates');
 
 module.exports = Backbone.View.extend({
 
-  template : '',
+  template : templates.examplepage,
 
   initialize : function (options) {
     options = options || {};
