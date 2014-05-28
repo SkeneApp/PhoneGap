@@ -8,7 +8,7 @@
  */
 var $ = require('jquery'),
     _ = require('underscore'),
-    Backbone = require('Backbone');
+    Backbone = require('backbone');
 
 
 /**
