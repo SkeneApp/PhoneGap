@@ -1,0 +1,12 @@
+2014-06-05 19:40:58.287 Skene[35366:70b] Multi-tasking -> Device: YES, App: YES
+2014-06-05 19:40:58.336 Skene[35366:70b] Unlimited access to network resources
+2014-06-05 19:40:58.338 Skene[35366:70b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-06-05 19:40:58.680 Skene[35366:70b] Resetting plugins due to page load.
+2014-06-05 19:40:58.789 Skene[35366:70b] Finished load of: file:///Users/Joonas/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/7AD43565-809F-424D-A707-D4CD59EC5838/Skene.app/www/index.html
+Terminating in response to SpringBoard's termination.

@@ -1,0 +1,23 @@
+/******************************************************************
+
+Settings file
+-------------
+
+Don't write any styles here. This file is reserved for style
+settings (~scss variables & conditionals).
+
+******************************************************************/
+
+// Partials on/off
+$use-buttons:								true;
+$use-map:										true;
+$use-message:								true;
+$use-slider:								true;
+
+// Views on/off
+$use-map-view:							true;
+$use-conversation-view:			true;
+$use-feed-view:							true;
+
+// Colors
+$app-bg-color: #fff;
