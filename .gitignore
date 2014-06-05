@@ -1,4 +1,8 @@
+# Node modules
 skene/www/node_modules
+
+assets/
+
 # CodeKit files
 config.codekit
 .sass-cache
@@ -16,16 +20,20 @@ config.codekit
 *.class
  
 # generated files - android project subfolder
-Android/bin/
-Android/gen/
-Android/assets/
+android/bin/
+android/gen/
+android/assets/
  
 # generated files
 bin/
 gen/
+assets/
  
 # Local configuration file (sdk path, etc)
 local.properties
+
+# Log files
+*.log
  
 # IOS / Xcode
 build/*
@@ -49,6 +57,7 @@ IOS/www/
  
 # Thumbnails
 ._*
+Thumbs.db
  
 # Files that might appear on external disk
 .Spotlight-V100
