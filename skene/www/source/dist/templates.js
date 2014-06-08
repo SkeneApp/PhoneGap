@@ -1,0 +1,1 @@
+module.exports = {"views_conversation":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= data.name %>!</h2>\n  <div><%= data.text %></div>\n</article>\n","views_feed":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= data.name %>!</h2>\n  <div><%= data.text %></div>\n</article>\n","views_map":"<h1>Front page</h1>\n<article>Some content goes here</article>\n"};
