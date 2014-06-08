@@ -1,1 +1,1 @@
-module.exports = {"examplepage.html":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","frontpage.html":"<h1>Front page</h1>\n<article>Some content goes here</article>\n"};
+module.exports = {};

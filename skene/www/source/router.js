@@ -23,7 +23,7 @@ module.exports = Backbone.Router.extend({
 
   routes : {
     '/example' : 'goToExample',
-    '*'        : 'frontPage'
+    '/*'        : 'frontPage'
   },
 
   initialize : function () {

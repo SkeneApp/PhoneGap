@@ -1,13 +1,21 @@
 var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    sass = require('gulp-sass');
 
 var paths = {
   watch : './source/**/*.js',
-  templates : './source/templates/',
+  templates : {
+    src : './source/templates/',
+    dest : './source/dist/templates.js'
+  },
   build : './source/app.js',
-  dest : './builds/'
+  dest : './builds/',
+  sass: {
+    src : './styles/scss/**/*.scss',
+    dest : './styles/css/'
+  }
 };
 
 gulp.task('scripts', function () {
@@ -18,27 +26,42 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('templates', function () {
-  fs.readdir(paths.templates, function (err, files) {
+
+  function getFileContent(dir) {
+    return fs.readFileSync(dir, 'utf8');
+  }
+
+  function processFilename(filename) {
+    return filename.slice(0, filename.indexOf('.'));
+  }
+
+  fs.readdir(paths.templates.src, function (err, files) {
     if(err) {
       console.log(err);
       return;
     }
 
     var templates = {},
-        dir, val;
+        dir, val, i, j;
 
     files.forEach(function (filename) {
+      var subfiles;
       if(filename.indexOf('.html') === -1) {
-        // work with directory
+        // if folder
+        subfiles = fs.readdirSync(paths.templates.src + filename);
+        subfiles.forEach(function (subfile) {
+          if(subfile.indexOf('.html') !== -1) {
+            // if file
+            templates[filename + '_' + processFilename(subfile)] = getFileContent(path.join(paths.templates.src, filename, subfile));
+          }
+        });
         return;
       }
-
-      dir = path.normalize(paths.templates + filename);
-      val = fs.readFileSync(dir, 'utf8');
-      templates[filename] = val;
+      // if file
+      templates[processFilename(filename)] = getFileContent(path.join(paths.templates.src, filename));
     });
 
-    dir = path.normalize(paths.dest + 'templates.js');
+    dir = path.normalize(paths.templates.dest);
 
     fs.writeFileSync(dir, 'module.exports = ' + JSON.stringify(templates) + ';');
     console.log('templates file was built (' + dir +')');
@@ -53,3 +76,16 @@ gulp.task('watch', ['scripts'], function () {
 });
 
 gulp.task('default', ['scripts', 'watch']);
+
+gulp.task('sass', function () {
+  gulp.src(paths.sass.src)
+        .pipe(sass())
+        .pipe(gulp.dest(paths.sass.dest));
+});
+
+gulp.task('w_sass', ['sass'], function () {
+  var watcher = gulp.watch(paths.sass.dest, ['sass']);
+  watcher.on('change', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', building styles...');
+  });
+});

@@ -1,6 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports = {"examplepage.html":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","frontpage.html":"<h1>Front page</h1>\n<article>Some content goes here</article>\n"};
-},{}],2:[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1610,7 +1608,7 @@ module.exports = {"examplepage.html":"<h1>Front page</h1>\n<article>\n  <h2>Hell
 
 }));
 
-},{"underscore":4}],3:[function(require,module,exports){
+},{"underscore":3}],2:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
@@ -10802,7 +10800,7 @@ return jQuery;
 
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -12147,6 +12145,8 @@ return jQuery;
   }
 }).call(this);
 
+},{}],4:[function(require,module,exports){
+module.exports = {"views_conversation":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","views_feed":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","views_map":"<h1>Front page</h1>\n<article>Some content goes here</article>\n"};
 },{}],5:[function(require,module,exports){
 /**
  * App loader
@@ -12156,6 +12156,7 @@ return jQuery;
 var $ = require('jquery'),
     Backbone = require('backbone');
 
+Backbone.$ = $;
 // Load modules
 var Router = require('./router');
 
@@ -12199,14 +12200,12 @@ var app = {
 
 app.initialize();
 
-},{"./router":7,"backbone":2,"jquery":3}],6:[function(require,module,exports){
+},{"./router":7,"backbone":1,"jquery":2}],6:[function(require,module,exports){
 /**
  * Example model
  */
 
-var $ = require('jquery'),
-    _ = require('underscore'),
-    Backbone = require('backbone');
+var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
   defaults : {
@@ -12215,7 +12214,7 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone":2,"jquery":3,"underscore":4}],7:[function(require,module,exports){
+},{"backbone":1}],7:[function(require,module,exports){
 /**
  * Router
  */
@@ -12241,7 +12240,7 @@ module.exports = Backbone.Router.extend({
 
   routes : {
     '/example' : 'goToExample',
-    '*'        : 'frontPage'
+    '/*'        : 'frontPage'
   },
 
   initialize : function () {
@@ -12274,20 +12273,19 @@ module.exports = Backbone.Router.extend({
   }
 });
 
-},{"./models/example":6,"./views/examplepage":8,"./views/frontpage":9,"backbone":2,"jquery":3,"underscore":4}],8:[function(require,module,exports){
+},{"./models/example":6,"./views/examplepage":8,"./views/frontpage":9,"backbone":1,"jquery":2,"underscore":3}],8:[function(require,module,exports){
 /**
  * Example page view
  */
 
-var $ = require('jquery'),
-    _ = require('underscore'),
+var _ = require('underscore'),
     Backbone = require('backbone');
 
-var templates = require('../../builds/templates');
+var templates = require('../dist/templates');
 
 module.exports = Backbone.View.extend({
 
-  template : templates.examplepage,
+  template : templates.views_conversation,
 
   initialize : function (options) {
     options = options || {};
@@ -12296,37 +12294,38 @@ module.exports = Backbone.View.extend({
   },
 
   render : function () {
-    var tmpl = _.template(this.template);
-    this.$el.html(tmpl(this.model.toJSON()));
+    this.$el.html(_.template(this.template,
+                             this.model.toJSON(),
+                             { variable : 'data' }));
     return this;
   }
 });
 
-},{"../../builds/templates":1,"backbone":2,"jquery":3,"underscore":4}],9:[function(require,module,exports){
+},{"../dist/templates":4,"backbone":1,"underscore":3}],9:[function(require,module,exports){
 /**
  * Front page view
  */
 
-var $ = require('jquery'),
-    _ = require('underscore'),
+var _ = require('underscore'),
     Backbone = require('backbone');
 
-var templates = require('../../builds/templates');
+var templates = require('../dist/templates');
 
 module.exports = Backbone.View.extend({
 
-  template : templates.frontpage,
+  template : templates.views_map,
 
   initialize : function (options) {
     options = options || {};
   },
 
   render : function () {
-    var tmpl = _.template(this.template);
-    this.$el.html(tmpl());
+    this.$el.html(_.template(this.template,
+                             {},
+                             { variable : 'data' }));
     return this;
   }
 
 });
 
-},{"../../builds/templates":1,"backbone":2,"jquery":3,"underscore":4}]},{},[5])
+},{"../dist/templates":4,"backbone":1,"underscore":3}]},{},[5])

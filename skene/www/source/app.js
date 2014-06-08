@@ -6,6 +6,7 @@
 var $ = require('jquery'),
     Backbone = require('backbone');
 
+Backbone.$ = $;
 // Load modules
 var Router = require('./router');
 

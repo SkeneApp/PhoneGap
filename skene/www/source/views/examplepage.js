@@ -2,15 +2,14 @@
  * Example page view
  */
 
-var $ = require('jquery'),
-    _ = require('underscore'),
+var _ = require('underscore'),
     Backbone = require('backbone');
 
-var templates = require('../../builds/templates');
+var templates = require('../dist/templates');
 
 module.exports = Backbone.View.extend({
 
-  template : templates.examplepage,
+  template : templates.views_conversation,
 
   initialize : function (options) {
     options = options || {};
@@ -19,8 +18,9 @@ module.exports = Backbone.View.extend({
   },
 
   render : function () {
-    var tmpl = _.template(this.template);
-    this.$el.html(tmpl(this.model.toJSON()));
+    this.$el.html(_.template(this.template,
+                             this.model.toJSON(),
+                             { variable : 'data' }));
     return this;
   }
 });

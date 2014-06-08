@@ -2,23 +2,23 @@
  * Front page view
  */
 
-var $ = require('jquery'),
-    _ = require('underscore'),
+var _ = require('underscore'),
     Backbone = require('backbone');
 
-var templates = require('../../builds/templates');
+var templates = require('../dist/templates');
 
 module.exports = Backbone.View.extend({
 
-  template : templates.frontpage,
+  template : templates.views_map,
 
   initialize : function (options) {
     options = options || {};
   },
 
   render : function () {
-    var tmpl = _.template(this.template);
-    this.$el.html(tmpl());
+    this.$el.html(_.template(this.template,
+                             {},
+                             { variable : 'data' }));
     return this;
   }
 

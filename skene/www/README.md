@@ -4,6 +4,8 @@
 
 1. [Install](#install)
 2. [Deploy](#deploy)
+  1. [Tasks](#tasks)
+  2. [Test in the browser](#test-in-the-browser)
 3. [Description](#description)
   1. [Templates](#templates)
   2. [Folder](#folder)
@@ -23,17 +25,27 @@ To be able to deploy app you need to install dependencies first.
 
 ## Deploy
 
+### Tasks
+
 Application uses [browserify](http://browserify.org/), therefore you need to rebuild app every time you made a change.
 
 There are four tasks:
 
 * `gulp scripts` builds *app.js*
-* `gulp templates` builds *templates.js*
+* `gulp templates` builds templates to *source/dist/templates.js*
 * `gulp watch` watches for file changes in *source* folder (**only js files**)
 * `gulp` runs `gulp scripts` and then `gulp watch`
+* `gulp sass` converts sass-files to css
+* `gulp w_sass` watches for sass-files changes and runs `gulp sass`
 
 If gulp command won't be found, try installing gulp globally:
 `npm install -g gulp`
+
+### Test in the browser
+
+`node server` will run node server on the *http://localhost:3000/*
+
+**NOTE** images support is not implemented yet
 
 
 ## Description
@@ -51,6 +63,8 @@ If gulp command won't be found, try installing gulp globally:
 ```
 -models/
 -collections/
+-dist/
+-templates/
 -views/
 -router.js
 -app.js
@@ -60,7 +74,6 @@ If gulp command won't be found, try installing gulp globally:
 
 ```
 -app.js
--templates.js
 ```
 
 **gulpfile.js** gulp tasks (described below)
