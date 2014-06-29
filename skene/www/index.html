@@ -1,19 +1,79 @@
-<!doctype>
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-    <link rel="stylesheet" type="text/css" href="styles/css/app.css" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <title>Skene</title>
-  </head>
-  <body>
-    <div id='app'>
-      <!-- App container -->
-    </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script src='./builds/app.js'></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="http://debug.phonegap.com/target/target-script-min.js#jhgfd"></script>
+        <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+
+        <script type="text/template" id="message_template">
+        <div style="background-color:#FFAD33;-moz-border-radius: 10px;border-radius: 10px; border: 1px solid black;margin-left:15px; margin-right:15px;">
+            <div style="margin-left:5px; margin-right:5px; overflow:hidden">
+                <label><b>Message id: </b><%= id_label %></label> <br />
+                <label><b>Publish time: </b><%= time_label %></label> <br />
+                <label><b>Location: </b><%= latitude_label %>, <%= longitude_label %></label> <br />
+                <label><b>Text: </b><%= text_label %></label>
+            </div>
+        </div>
+        <br />
+        </script>
+        <style type="text/css">
+            #wrapper {
+                min-height: 100%; 
+            }
+            .labelPin{
+            overflow:visible !important;
+            }
+            .labelPin div{
+            white-space:nowrap;
+            color:black !important;
+            }
+        </style>
+
+
+        <title>Hello World</title>
+    </head>
+    <body onload="GetMap();CenterMap();GetLocalSkenes();" style="margin:0px 0px 0px 0px;">
+        <div class="app">
+	            <div style="position:fixed;width:100%; background-color: #E0E0E0; height: 50%;">
+	            	<div id="divMap" style="width:100%; height:100%; position: relative; background-color:#FFAD33; margin-left:auto; margin-right:auto; border: 1px solid black" />
+	           	</div>
+	           	<div style="width:100%; height:100%; background-color: #ADC8EA; overflow:auto; overflow-x: hidden;">
+                    <div id="local_skenes_container" style="">
+                    </div>
+	           	</div>
+
+
+        </div>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+      	<script src="js/jquery-1.11.1.js"></script>
+	 	<script src="js/underscore.js"></script>
+		<script src="js/backbone.js"></script>
+		<script src="js/skene.js"></script>   
+    </body>
 </html>

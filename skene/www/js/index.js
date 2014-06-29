@@ -16,6 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var map;
+function GetMap()
+{  
+    console.log("-------------------GET MAPS CALLED-----------------");
+    map = new Microsoft.Maps.Map(document.getElementById("divMap"), { credentials: "AmZQd6HloNWVoxbHzZvV4cHDVQNgR5C_0zK6G2A4UwTBiQaoNnV1rn98Bpkdq6hG", showDashboard: false, enableSearchLogo: false });
+}
+
+function CenterMap()
+{
+
+    navigator.geolocation.getCurrentPosition(function(pos){
+            map.setView({center:new Microsoft.Maps.Location(pos.coords.latitude, pos.coords.longitude)});
+            map.setView({zoom:11}); 
+           // map.setOptions({showDashboard : false});
+           // map.setOptions({showMapTypeSelector: false});
+            });
+}
+
+function getLocation(callback)
+{
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(callback);
+    }
+    else {alert("Geolocation error.");}
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -31,18 +58,21 @@ var app = {
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
+    // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+       // GetMap();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
+        /*
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+        */
 
         console.log('Received Event: ' + id);
     }
