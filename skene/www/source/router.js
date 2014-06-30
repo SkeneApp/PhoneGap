@@ -14,16 +14,20 @@ var $ = require('jquery'),
 /**
  * Load modules
  */
-var FrontPageView = require('./views/frontpage'),
+var FeedPageView = require('./views/feedpage'),
+    FrontPageView = require('./views/frontpage'),
     ExamplePageView = require('./views/examplepage'),
-    ExampleModel = require('./models/example');
+
+    ExampleModel = require('./models/example'),
+
+    Conversations = require('./collections/conversations');
 
 
 module.exports = Backbone.Router.extend({
 
   routes : {
     '/example' : 'goToExample',
-    '/*'        : 'frontPage'
+    '/*' : 'feed'
   },
 
   initialize : function () {
@@ -45,13 +49,27 @@ module.exports = Backbone.Router.extend({
   },
 
   /**
-   * Front page controller
+   * Feed page
    */
-  frontPage : function () {
+  feed : function () {
+    console.log('go feed');
     if(this.view) this.view.remove();
 
-    this.view = new FrontPageView();
+    var conversations = new Conversations();
+    // Load conversations, add them to feed page view and put to the page
+    conversations.fetch({
+      data : {
+        json : 1,
+        count : 10
+      },
+      success : (function () {
 
-    this.$app.html(this.view.render().el);
+        this.view = new FeedPageView({
+          collection : conversations
+        });
+
+        this.$app.html(this.view.render().el);
+      }).bind(this)
+    });
   }
 });

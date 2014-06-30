@@ -12146,8 +12146,22 @@ return jQuery;
 }).call(this);
 
 },{}],4:[function(require,module,exports){
-module.exports = {"views_conversation":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","views_feed":"<h1>Front page</h1>\n<article>\n  <h2>Hello <%= name %>!</h2>\n  <div><%= text %></div>\n</article>\n","views_map":"<h1>Front page</h1>\n<article>Some content goes here</article>\n"};
-},{}],5:[function(require,module,exports){
+/**
+ * Conversations collection
+ */
+
+var Backbone = require('backbone');
+
+var Conversation = require('../models/conversation');
+
+module.exports = Backbone.Collection.extend({
+  model : Conversation,
+  url : 'http://whispr.outi.me/api/get_latest'
+});
+
+},{"../models/conversation":7,"backbone":1}],5:[function(require,module,exports){
+module.exports = {"views":[]};
+},{}],6:[function(require,module,exports){
 /**
  * App loader
  */
@@ -12200,7 +12214,16 @@ var app = {
 
 app.initialize();
 
-},{"./router":7,"backbone":1,"jquery":2}],6:[function(require,module,exports){
+},{"./router":9,"backbone":1,"jquery":2}],7:[function(require,module,exports){
+/**
+ * Conversation model
+ */
+
+var Backbone = require('backbone');
+
+module.exports = Backbone.Model.extend({});
+
+},{"backbone":1}],8:[function(require,module,exports){
 /**
  * Example model
  */
@@ -12214,7 +12237,7 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone":1}],7:[function(require,module,exports){
+},{"backbone":1}],9:[function(require,module,exports){
 /**
  * Router
  */
@@ -12231,16 +12254,20 @@ var $ = require('jquery'),
 /**
  * Load modules
  */
-var FrontPageView = require('./views/frontpage'),
+var FeedPageView = require('./views/feedpage'),
+    FrontPageView = require('./views/frontpage'),
     ExamplePageView = require('./views/examplepage'),
-    ExampleModel = require('./models/example');
+
+    ExampleModel = require('./models/example'),
+
+    Conversations = require('./collections/conversations');
 
 
 module.exports = Backbone.Router.extend({
 
   routes : {
     '/example' : 'goToExample',
-    '/*'        : 'frontPage'
+    '/*' : 'feed'
   },
 
   initialize : function () {
@@ -12262,18 +12289,55 @@ module.exports = Backbone.Router.extend({
   },
 
   /**
-   * Front page controller
+   * Feed page
    */
-  frontPage : function () {
+  feed : function () {
+    console.log('go feed');
     if(this.view) this.view.remove();
 
-    this.view = new FrontPageView();
+    var conversations = new Conversations();
+    // Load conversations, add them to feed page view and put to the page
+    conversations.fetch({
+      data : {
+        json : 1,
+        count : 10
+      },
+      success : (function () {
 
-    this.$app.html(this.view.render().el);
+        this.view = new FeedPageView({
+          collection : conversations
+        });
+
+        this.$app.html(this.view.render().el);
+      }).bind(this)
+    });
   }
 });
 
-},{"./models/example":6,"./views/examplepage":8,"./views/frontpage":9,"backbone":1,"jquery":2,"underscore":3}],8:[function(require,module,exports){
+},{"./collections/conversations":4,"./models/example":8,"./views/examplepage":11,"./views/feedpage":12,"./views/frontpage":13,"backbone":1,"jquery":2,"underscore":3}],10:[function(require,module,exports){
+/**
+ * Conversation view
+ */
+
+var Backbone = require('backbone'),
+    _ = require('underscore');
+
+var templates = require('../dist/templates');
+
+module.exports = Backbone.View.extend({
+
+  template : templates.views.conversation,
+
+  render : function () {
+    console.log(this.model);
+    this.$el.html(_.template(this.template,
+                             this.model.toJSON(),
+                             { variable : 'data' }));
+    return this;
+  }
+});
+
+},{"../dist/templates":5,"backbone":1,"underscore":3}],11:[function(require,module,exports){
 /**
  * Example page view
  */
@@ -12301,7 +12365,50 @@ module.exports = Backbone.View.extend({
   }
 });
 
-},{"../dist/templates":4,"backbone":1,"underscore":3}],9:[function(require,module,exports){
+},{"../dist/templates":5,"backbone":1,"underscore":3}],12:[function(require,module,exports){
+/**
+ * Feed page view
+ */
+
+var Backbone = require('backbone'),
+    _ = require('underscore');
+
+var templates = require('../dist/templates');
+
+var ConversationView = require('./conversation');
+
+module.exports = Backbone.View.extend({
+  templates : templates.views.feed,
+
+  initialize : function (options) {
+    options = options || {};
+
+    this.collection = options.collection;
+  },
+
+  render : function () {
+    this.$el.html(_.template(this.template,
+                             {},
+                             { variable : 'data' }));
+
+    return this;
+  },
+
+  renderConversations : function () {
+    this.$el.find('#conversations').empty();
+
+    _.each(this.collection, function (el) {
+      var conversationView = new ConversationView({
+        model : el
+      });
+      this.$el.find('#conversations').append(conversationView.render().el);
+    }, this);
+
+    return this;
+  }
+});
+
+},{"../dist/templates":5,"./conversation":10,"backbone":1,"underscore":3}],13:[function(require,module,exports){
 /**
  * Front page view
  */
@@ -12328,4 +12435,4 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"../dist/templates":4,"backbone":1,"underscore":3}]},{},[5])
+},{"../dist/templates":5,"backbone":1,"underscore":3}]},{},[6])

@@ -44,22 +44,33 @@ gulp.task('templates', function () {
     var templates = {},
         dir, val, i, j;
 
-    files.forEach(function (filename) {
-      var subfiles;
+    for(i = 0; i < files.length; i += 1) {
+      var filename = files[i],
+          subfiles;
+
+      console.log(filename);
+
       if(filename.indexOf('.html') === -1) {
         // if folder
+        templates[filename] = [];
         subfiles = fs.readdirSync(paths.templates.src + filename);
-        subfiles.forEach(function (subfile) {
+
+        for(j = 0; j < subfiles.length; j += 1) {
+          var subfile = subfiles[i];
+
+          console.log(subfile);
+
           if(subfile.indexOf('.html') !== -1) {
             // if file
-            templates[filename + '_' + processFilename(subfile)] = getFileContent(path.join(paths.templates.src, filename, subfile));
+            templates[filename][processFilename(subfile)] = getFileContent(path.join(paths.templates.src, filename, subfile));
           }
-        });
-        return;
+        }
       }
       // if file
-      templates[processFilename(filename)] = getFileContent(path.join(paths.templates.src, filename));
-    });
+      else {
+        templates[processFilename(filename)] = getFileContent(path.join(paths.templates.src, filename));
+      }
+    }
 
     dir = path.normalize(paths.templates.dest);
 
