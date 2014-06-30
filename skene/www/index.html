@@ -54,15 +54,23 @@
 
         <title>Hello World</title>
     </head>
-    <body onload="GetMap();CenterMap();GetLocalSkenes();" style="margin:0px 0px 0px 0px;">
+    <body onload="GetMap();CenterMap();GetMapFeedSkenes();" style="margin:0px 0px 0px 0px;">
         <div class="app">
 	            <div style="position:fixed;width:100%; background-color: #E0E0E0; height: 50%;">
 	            	<div id="divMap" style="width:100%; height:100%; position: relative; background-color:#FFAD33; margin-left:auto; margin-right:auto; border: 1px solid black" />
 	           	</div>
-	           	<div style="width:100%; height:100%; background-color: #ADC8EA; overflow:auto; overflow-x: hidden;">
+	           	<div style="width:100%; height:85%; background-color: #ADC8EA; overflow:auto; overflow-x: hidden;">
                     <div id="local_skenes_container" style="">
                     </div>
 	           	</div>
+                <div id="slider_container" style="background-color:#EEEEEE;height:100px;width:300px;float:left;">
+                    <div style="background-color:#FFAD33;border-radius: 10px; border: 1px solid black;margin-left:15px; margin-right:15px;">
+                        <div style="margin-left:5px; margin-right:5px; overflow:hidden">
+                            <input type="range" class="slider" min="0" max="100" step="1" style="width:225px"></input>
+                        </div>
+                    </div>
+                    <br />
+                </div>
 
 
         </div>
@@ -74,6 +82,11 @@
       	<script src="js/jquery-1.11.1.js"></script>
 	 	<script src="js/underscore.js"></script>
 		<script src="js/backbone.js"></script>
+
+        <script src="source/models/Message.js"></script>  
+        <script src="source/models/MapSkenes.js"></script>  
+        <script src="source/views/MessageView.js"></script> 
+        <script src="source/views/MapFeedView.js"></script> 
 		<script src="js/skene.js"></script>   
     </body>
 </html>
